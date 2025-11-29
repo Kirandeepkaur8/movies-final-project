@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1 Add Movie
+  if errors
+    each error in errors
+      p.text-danger= error.msg
+  form(action='/movies/add', method='POST')
+    div.mb-3
+      input.form-control(type='text', name='name', placeholder='Movie Name', value=name)
+    div.mb-3
+      textarea.form-control(name='description', placeholder='Description')= description
+    div.mb-3
+      input.form-control(type='number', name='year', placeholder='Year', value=year)
+    div.mb-3
+      input.form-control(type='text', name='genres', placeholder='Genres comma separated', value=genres)
+    div.mb-3
+      input.form-control(type='number', step='0.1', name='rating', placeholder='Rating', value=rating)
+    button.btn.btn-primary(type='submit') Add Movie

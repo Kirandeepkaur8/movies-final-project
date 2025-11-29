@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+  h1 Edit Movie
+
+  //- Display validation errors if any
+  if errors
+    each error in errors
+      p.text-danger= error.msg
+
+  form(action=`/movies/edit/${movie._id}`, method='POST')
+    div.mb-3
+      label(for='name') Name
+      input#name.form-control(type='text', name='name', value=movie.name, required)
+
+    div.mb-3
+      label(for='description') Description
+      textarea#description.form-control(name='description', required)= movie.description
+
+    div.mb-3
+      label(for='year') Year
+      input#year.form-control(type='number', name='year', value=movie.year, required)
+
+    div.mb-3
+      label(for='genres') Genres (comma separated)
+      input#genres.form-control(type='text', name='genres', value=movie.genres.join(','), required)
+
+    div.mb-3
+      label(for='rating') Rating
+      input#rating.form-control(type='number', name='rating', step='0.1', min='0', max='5', value=movie.rating, required)
+
+    button.btn.btn-success(type='submit') Update Movie
+    a.btn.btn-secondary(href='/') Cancel

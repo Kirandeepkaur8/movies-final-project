@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  h1 Movies List
+
+  a.btn.btn-primary.mb-3(href='/movies/add') Add Movie
+
+  if movies.length
+    table.table.table-striped
+      thead
+        tr
+          th Name
+          th Description
+          th Year
+          th Genres
+          th Rating
+          th Actions
+      tbody
+        each movie in movies
+          tr
+            td= movie.name
+            td= movie.description
+            td= movie.year
+            td= movie.genres.join(", ")
+            td= movie.rating
+            td
+              //- Safely check if user and movie.postedBy exist
+              if user && movie.postedBy && movie.postedBy._id && user._id.toString() === movie.postedBy._id.toString()
+                a.btn.btn-sm.btn-primary(href=`/movies/edit/${movie._id}`) Edit
+                form(method='POST', action=`/movies/delete/${movie._id}`, style='display:inline')
+                  button.btn.btn-sm.btn-danger(type='submit', onclick="return confirm('Are you sure?');") Delete
+  else
+    p No movies found.
